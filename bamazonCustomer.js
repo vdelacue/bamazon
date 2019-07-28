@@ -13,42 +13,37 @@ var connection = mysql.createConnection({
 // connect to the mysql server and sql database
 connection.connect(function (err) {
     if (err) throw err;
-    // run the start function after the connection is made to prompt the user
+    // run the start function after the connection is made then run buyItem fucntion to prompt the user to buy
     start();
     buyItem();
 });
 
-
-// function which prompts the user for what action they should take
+// function to list all items
 var start = function () {
     connection.query("SELECT * FROM products", function (err, results) {
         if (err) throw err;
         // once you have the items, prompt the user for which they'd like to buy on
-
-        console.log(results);
         console.log(`
         
         WELCOME TO BAMAZON!
-        
-        `);
+        Checkout available items!`);
+        //loop through results and print all available items, id, and department
         for (var i = 0; i < results.length; i++) {
             console.log(`
            --------------------------------------------------------- 
-
                 "Item ID": ${results[i].item_id}
                 "Product Name": ${results[i].product_name}
                 "Department": ${results[i].department_name}
                 "Price": ${results[i].price}
-                "Stock Quantity": ${results[i].stock_quantity}
-                `)
+                "Stock Quantity": ${results[i].stock_quantity}`)
         };
     });
 }
+//function which prompts the user to select an item according to id and quantity
 var buyItem = function () {
     connection.query("SELECT * FROM products", function (err, results) {
         if (err) throw err;
-        // once you have the items, prompt the user for which they'd like to buy on
-        
+        // items are listed, prompt user for which they'd like to buy according to id
         inquirer
             .prompt([{
                     name: "idInput",
@@ -69,7 +64,7 @@ var buyItem = function () {
                         chosenItem = results[i];
                     }
                 }
-                // determine if bid was high enough
+                // determine if quanity requested is in stock
                 if (chosenItem.stock_quantity > parseInt(answer.quantity)) {
                     // quantity requested is in stock, let the user know total cost of purchase
                     connection.query(
@@ -83,13 +78,13 @@ var buyItem = function () {
                         ],
                         function (error) {
                             if (error) throw err;
-                            console.log("item purchased successfully!");
+                            console.log(`Item purchased successfully Your Total is $${chosenItem.price * answer.quantity}`);
                             // start();
                         }
                     );
                 } else {
                     // not enough in stock to fulfill order, so apologize and start over
-                    console.log("Insufficient quantity!");
+                    console.log(`Insufficient quantity!`);
                     // start();
                 }
             });
