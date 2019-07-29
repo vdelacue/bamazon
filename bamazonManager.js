@@ -11,7 +11,6 @@ const connection = mysql.createConnection({
     database: "bamazon_DB"
 });
 
-
 connection.connect(function (err) {
     if (err) throw err;
     console.log(colors.rainbow(`
@@ -65,7 +64,6 @@ function viewProducts() {
         console.table(results)
         managerPrompt();
     });
-
 }
 
 function viewLowInventory() {
@@ -89,34 +87,30 @@ function viewLowInventory() {
 function addInventory() {
     connection.query("SELECT * FROM products", function (err, results) {
         if (err) throw err;
-        // items are listed, prompt user for which they'd like to buy according to id
+        console.table(results)
         inquirer
             .prompt([{
                     name: "idInput",
                     type: "number",
-                    message: "Please enter the ID of the item you would like to purchase"
+                    message: "Please enter the ID of the item you would like to increase inventory"
                 },
                 {
                     name: "quantity",
                     type: "number",
-                    message: "How many would you like to purchase?"
+                    message: "How much are you adding to inventory?"
                 }
             ])
             .then(function (answer) {
-                // get the information of the chosen item
                 let chosenItem;
                 for (let i = 0; i < results.length; i++) {
                     if (results[i].item_id === parseInt(answer.idInput)) {
                         chosenItem = results[i];
                     }
                 }
-                // determine if quanity requested is in stock
-                if (chosenItem.stock_quantity > parseInt(answer.quantity)) {
-                    // quantity requested is in stock, let the user know total cost of purchase
-                    connection.query(
+               connection.query(
                         "UPDATE products SET ? WHERE ?",
                         [{
-                                stock_quantity: (chosenItem.stock_quantity - answer.quantity)
+                                stock_quantity: (chosenItem.stock_quantity + answer.quantity)
                             },
                             {
                                 item_id: chosenItem.item_id
@@ -124,15 +118,11 @@ function addInventory() {
                         ],
                         function (error) {
                             if (error) throw err;
-                            console.log(colors.green.bold(`Item purchased successfully Your Total is $${chosenItem.price * answer.quantity}`));
-                            start();
+                            console.log(colors.green.bold(`Inventory successfully updated You now have ${chosenItem.stock_quantity} in stock`));
+                            managerPrompt();
                         }
                     );
-                } else {
-                    // not enough in stock to fulfill order, so apologize and start over
-                    console.log(colors.red.bold(`Insufficient quantity! The Quantity you have selected it too large please try again`));
-                    start();
-                }
+                
             });
     })
 }
