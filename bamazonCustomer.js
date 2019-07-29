@@ -1,9 +1,9 @@
-var mysql = require("mysql");
-var inquirer = require("inquirer");
-var colors = require('colors');
+const mysql = require("mysql");
+const inquirer = require("inquirer");
+const colors = require('colors');
 
 // create the connection information for the sql database
-var connection = mysql.createConnection({
+const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
@@ -20,7 +20,7 @@ connection.connect(function (err) {
 });
 
 // function to list all items
-var start = function () {
+const start = function () {
     connection.query("SELECT * FROM products", function (err, results) {
         if (err) throw err;
         // once you have the items, prompt the user for which they'd like to buy on
@@ -28,20 +28,11 @@ var start = function () {
                                 WELCOME TO BAMAZON!
                             Checkout available items!`));
         console.table(results)
-        //loop through results and print all available items, id, and department
-    //     for (var i = 0; i < results.length; i++) {
-    //         console.log(colors.rainbow(`
-    // ---------------------------------------------------------`))
-    // console.log(colors.white.bold(`Item ID: ${results[i].item_id}`))
-    // console.log(colors.white.bold(`Product Name: ${results[i].product_name}`))
-    // console.log(colors.white(`Department: ${results[i].department_name}`))
-    // console.log(colors.white(`Price: ${results[i].price}`))
-    // console.log(colors.red.bold(`Stock Quantity: ${results[i].stock_quantity}`))
-    //     };
     });
 }
+
 //function which prompts the user to select an item according to id and quantity
-var buyItem = function () {
+const buyItem = function () {
     connection.query("SELECT * FROM products", function (err, results) {
         if (err) throw err;
         // items are listed, prompt user for which they'd like to buy according to id
@@ -59,8 +50,8 @@ var buyItem = function () {
             ])
             .then(function (answer) {
                 // get the information of the chosen item
-                var chosenItem;
-                for (var i = 0; i < results.length; i++) {
+                let chosenItem;
+                for (let i = 0; i < results.length; i++) {
                     if (results[i].item_id === parseInt(answer.idInput)) {
                         chosenItem = results[i];
                     }
@@ -79,14 +70,14 @@ var buyItem = function () {
                         ],
                         function (error) {
                             if (error) throw err;
-                            console.log(`Item purchased successfully Your Total is $${chosenItem.price * answer.quantity}`);
-                            // start();
+                            console.log(colors.green.bold(`Item purchased successfully Your Total is $${chosenItem.price * answer.quantity}`));
+                            start();
                         }
                     );
                 } else {
                     // not enough in stock to fulfill order, so apologize and start over
-                    console.log(`Insufficient quantity!`);
-                    // start();
+                    console.log(colors.red.bold(`Insufficient quantity! The Quantity you have selected it too large please try again`));
+                    start();
                 }
             });
     })
