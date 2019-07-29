@@ -25,10 +25,10 @@ VALUES("personality", "misc", 3000, 10);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES("sense of humor", "misc", 2200, 15);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES();
+VALUES("time machine", "electronics", 3000, 2);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES();
+VALUES("the hope diamond", "jewelry", 5000000, 1);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES();
+VALUES("The Mona Lisa", "art", 3500000, 1);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES();
+VALUES("Guernica Print", "art", 300, 250);
