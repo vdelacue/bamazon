@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var colors = require('colors');
 
 // create the connection information for the sql database
 var connection = mysql.createConnection({
@@ -23,20 +24,20 @@ var start = function () {
     connection.query("SELECT * FROM products", function (err, results) {
         if (err) throw err;
         // once you have the items, prompt the user for which they'd like to buy on
-        console.log(`
-        
-        WELCOME TO BAMAZON!
-        Checkout available items!`);
+        console.log(colors.rainbow(`
+                                WELCOME TO BAMAZON!
+                            Checkout available items!`));
+        console.table(results)
         //loop through results and print all available items, id, and department
-        for (var i = 0; i < results.length; i++) {
-            console.log(`
-           --------------------------------------------------------- 
-                "Item ID": ${results[i].item_id}
-                "Product Name": ${results[i].product_name}
-                "Department": ${results[i].department_name}
-                "Price": ${results[i].price}
-                "Stock Quantity": ${results[i].stock_quantity}`)
-        };
+    //     for (var i = 0; i < results.length; i++) {
+    //         console.log(colors.rainbow(`
+    // ---------------------------------------------------------`))
+    // console.log(colors.white.bold(`Item ID: ${results[i].item_id}`))
+    // console.log(colors.white.bold(`Product Name: ${results[i].product_name}`))
+    // console.log(colors.white(`Department: ${results[i].department_name}`))
+    // console.log(colors.white(`Price: ${results[i].price}`))
+    // console.log(colors.red.bold(`Stock Quantity: ${results[i].stock_quantity}`))
+    //     };
     });
 }
 //function which prompts the user to select an item according to id and quantity
