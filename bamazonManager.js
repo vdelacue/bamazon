@@ -1,3 +1,4 @@
+//Require necessary dependencies
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const colors = require('colors');
@@ -12,6 +13,7 @@ const connection = mysql.createConnection({
     database: "bamazon_DB"
 });
 
+//connect to sql database using connection variable
 connection.connect(function (err) {
     if (err) throw err;
     console.log(colors.rainbow(`
@@ -20,6 +22,7 @@ connection.connect(function (err) {
     managerPrompt();
 });
 
+//Array holding prompt choices for inquirer prompt
 const choicesArr = [
     "View Products for Sale",
     "View Low Inventory",
@@ -28,6 +31,7 @@ const choicesArr = [
     "Exit"
 ]
 
+//function that is called when connection is made to sql database that will take input from user to make queries
 function managerPrompt() {
     inquirer
         .prompt({
@@ -36,6 +40,7 @@ function managerPrompt() {
             message: "What would you like to do?",
             choices: choicesArr
         }).then(function (answers) {
+            //Each choice will execute its own function and query from database according to what the user wants to do/see
             switch (answers.select) {
                 case choicesArr[0]:
                     viewProducts();
@@ -57,6 +62,9 @@ function managerPrompt() {
         })
 }
 
+//------------------------------------Functions that are called in switch function according to user choice------------------------//
+
+//Function to display all products and their data
 function viewProducts() {
     connection.query("SELECT * FROM products", function (err, results) {
         if (err) throw err;
@@ -67,6 +75,7 @@ function viewProducts() {
     });
 }
 
+//Function to only view items with stock-quantities of 5 or lower
 function viewLowInventory() {
     connection.query("SELECT * FROM products WHERE stock_quantity <= 5", function (err, results) {
         if (err) throw err;
@@ -85,6 +94,7 @@ function viewLowInventory() {
     });
 }
 
+//Function to add stock to any product
 function addInventory() {
     connection.query("SELECT * FROM products", function (err, results) {
         if (err) throw err;
@@ -108,26 +118,27 @@ function addInventory() {
                         chosenItem = results[i];
                     }
                 }
-               connection.query(
-                        "UPDATE products SET ? WHERE ?",
-                        [{
-                                stock_quantity: (chosenItem.stock_quantity + answer.quantity)
-                            },
-                            {
-                                item_id: chosenItem.item_id
-                            }
-                        ],
-                        function (error) {
-                            if (error) throw err;
-                            console.log(colors.green.bold(`Inventory successfully updated You now have ${chosenItem.stock_quantity} in stock`));
-                            managerPrompt();
+                connection.query(
+                    "UPDATE products SET ? WHERE ?",
+                    [{
+                            stock_quantity: (chosenItem.stock_quantity + answer.quantity)
+                        },
+                        {
+                            item_id: chosenItem.item_id
                         }
-                    );
-                
+                    ],
+                    function (error) {
+                        if (error) throw err;
+                        console.log(colors.green.bold(`Inventory successfully updated You now have ${chosenItem.stock_quantity} in stock`));
+                        managerPrompt();
+                    }
+                );
+
             });
     })
 }
 
+//Function to add new product to inventory and all its corresponding data
 function addProduct() {
     inquirer
         .prompt([{
