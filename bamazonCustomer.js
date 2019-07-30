@@ -40,12 +40,24 @@ const buyItem = function () {
             .prompt([{
                     name: "idInput",
                     type: "number",
-                    message: "Please enter the ID of the item you would like to purchase"
+                    message: "Please enter the ID of the item you would like to purchase",
+                    validate: function (value) {
+                        if (isNaN(value) === false) {
+                            return true;
+                        }
+                        return false;
+                    }
                 },
                 {
                     name: "quantity",
                     type: "number",
-                    message: "How many would you like to purchase?"
+                    message: "How many would you like to purchase?",
+                    validate: function (value) {
+                        if (isNaN(value) === false) {
+                            return true;
+                        }
+                        return false;
+                    }
                 }
             ])
             .then(function (answer) {
@@ -72,12 +84,14 @@ const buyItem = function () {
                             if (error) throw err;
                             console.log(colors.green.bold(`Item purchased successfully Your Total is $${chosenItem.price * answer.quantity}`));
                             start();
+                            buyItem();
                         }
                     );
                 } else {
                     // not enough in stock to fulfill order, so apologize and start over
                     console.log(colors.red.bold(`Insufficient quantity! The Quantity you have selected it too large please try again`));
                     start();
+                    buyItem();
                 }
             });
     })

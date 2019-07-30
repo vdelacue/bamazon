@@ -2,6 +2,7 @@ const mysql = require("mysql");
 const inquirer = require("inquirer");
 const colors = require('colors');
 
+
 // create the connection information for the sql database
 const connection = mysql.createConnection({
     host: "localhost",
