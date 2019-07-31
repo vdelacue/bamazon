@@ -28,6 +28,7 @@ const start = function () {
                                 WELCOME TO BAMAZON!
                             Checkout available items!`));
         console.table(results)
+        // console.table(results)
     });
 }
 
@@ -82,7 +83,22 @@ const buyItem = function () {
                         ],
                         function (error) {
                             if (error) throw err;
-                            console.log(colors.green.bold(`Item purchased successfully Your Total is $${chosenItem.price * answer.quantity}`));
+                            console.log(colors.america(`
+
+                            Item purchased successfully!`));
+
+                            console.log(colors.green.bold(`
+                            You purchased: ${chosenItem.product_name}
+                            
+                            Price: $${chosenItem.price}.00
+
+                            Quantity: ${answer.quantity}
+
+                            --------------------------------
+                            Your Total is $${chosenItem.price * answer.quantity}.00
+                            
+                            
+                            `));
                             start();
                             buyItem();
                         }
