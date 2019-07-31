@@ -129,7 +129,13 @@ function addInventory() {
                     ],
                     function (error) {
                         if (error) throw err;
-                        console.log(colors.green.bold(`Inventory successfully updated You now have ${chosenItem.stock_quantity} in stock`));
+                        console.log(colors.green.bold(`
+                        
+                        Inventory successfully updated! 
+                        
+                        
+                        You now have ${chosenItem.stock_quantity} in stock`));
+                        
                         managerPrompt();
                     }
                 );

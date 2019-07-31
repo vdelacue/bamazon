@@ -1,3 +1,4 @@
+//Require necessary dependencies
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const colors = require('colors');
@@ -21,14 +22,14 @@ connection.connect(function (err) {
 
 // function to list all items
 const start = function () {
-    connection.query("SELECT * FROM products", function (err, results) {
+    connection.query("SELECT item_id, product_name, price, stock_quantity FROM products", function (err, results) {
         if (err) throw err;
         // once you have the items, prompt the user for which they'd like to buy on
         console.log(colors.rainbow(`
                                 WELCOME TO BAMAZON!
                             Checkout available items!`));
         console.table(results)
-        // console.table(results)
+        
     });
 }
 
@@ -64,18 +65,23 @@ const buyItem = function () {
             .then(function (answer) {
                 // get the information of the chosen item
                 let chosenItem;
+                
                 for (let i = 0; i < results.length; i++) {
                     if (results[i].item_id === parseInt(answer.idInput)) {
                         chosenItem = results[i];
                     }
                 }
+                let sales = (chosenItem.price * answer.quantity) + chosenItem.product_sales ;
                 // determine if quanity requested is in stock
                 if (chosenItem.stock_quantity > parseInt(answer.quantity)) {
                     // quantity requested is in stock, let the user know total cost of purchase
                     connection.query(
-                        "UPDATE products SET ? WHERE ?",
+                        "UPDATE products SET ?,? WHERE ?",
                         [{
                                 stock_quantity: (chosenItem.stock_quantity - answer.quantity)
+                            },
+                            {
+                                product_sales: (sales)
                             },
                             {
                                 item_id: chosenItem.item_id
@@ -105,7 +111,15 @@ const buyItem = function () {
                     );
                 } else {
                     // not enough in stock to fulfill order, so apologize and start over
-                    console.log(colors.red.bold(`Insufficient quantity! The Quantity you have selected it too large please try again`));
+                    console.log(colors.red.bold(`
+                    
+                    WARNING!!! WARNING!!! WARNING!!!
+
+                    Insufficient quantity! The Quantity you have selected it too large please try again
+                    
+                    
+                    THIS TIME CHECK STOCK-QUANTITY!!! AND READ THE DOCUMENTATION!!!
+                    `));
                     start();
                     buyItem();
                 }
