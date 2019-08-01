@@ -1,6 +1,6 @@
 USE bamazon_DB;
 
-CREATE TABLE department (
+CREATE TABLE departments (
   department_id INTEGER(10) NOT NULL AUTO_INCREMENT,
   department_name VARCHAR(100) NOT NULL,
   department_name VARCHAR(45) NOT NULL,
@@ -11,5 +11,5 @@ CREATE TABLE department (
 ALTER TABLE products
 AUTO_INCREMENT=100;
 
-INSERT INTO products (product_name, department_name, price, stock_quantity)
+INSERT INTO departments (product_name, department_name, price, stock_quantity)
 VALUES("computer", "electronics", 150, 200);

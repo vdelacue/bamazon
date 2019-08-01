@@ -46,6 +46,8 @@ INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES("The Mona Lisa", "art", 3500000, 3);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES("Guernica Print", "art", 300, 250);
+
+
 INSERT INTO departments (department_name, over_head_costs)
 VALUES("human", 2000);
 INSERT INTO departments (department_name, over_head_costs)

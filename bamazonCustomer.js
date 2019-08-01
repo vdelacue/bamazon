@@ -22,12 +22,12 @@ connection.connect(function (err) {
 
 // function to list all items
 const start = function () {
-    connection.query("SELECT item_id, product_name, price, stock_quantity FROM products", function (err, results) {
+    connection.query("SELECT item_id, product_name, price FROM products", function (err, results) {
         if (err) throw err;
         // once you have the items, prompt the user for which they'd like to buy on
         console.log(colors.rainbow(`
-                                WELCOME TO BAMAZON!
-                            Checkout available items!`));
+                  WELCOME TO BAMAZON!
+               Checkout available items!`));
         console.table(results)
         
     });
@@ -117,8 +117,6 @@ const buyItem = function () {
 
                     Insufficient quantity! The Quantity you have selected it too large please try again
                     
-                    
-                    THIS TIME CHECK STOCK-QUANTITY!!! AND READ THE DOCUMENTATION!!!
                     `));
                     start();
                     buyItem();
