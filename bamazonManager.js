@@ -134,7 +134,10 @@ function addInventory() {
                         Inventory successfully updated! 
                         
                         
-                        You now have ${chosenItem.stock_quantity} in stock`));
+                        You now have ${chosenItem.stock_quantity} in stock
+                        
+                        
+                        `));
                         
                         managerPrompt();
                     }
@@ -191,8 +194,18 @@ function addProduct() {
                 },
                 function (err) {
                     if (err) throw err;
+                    console.log(colors.rainbow(`
+                                      ( ͡° ͜ʖ﻿ ͡°) Ƹ̵̡Ӝ̵̨̄Ʒ.•❀.•❤•.¸✿¸.•❤•Oº
+
+                                         `))
                     console.log(colors.cyan.bold(`
                             You successfully added ${answer.product} to your products!`));
+                    console.log(colors.rainbow(`
+                                      ( ͡° ͜ʖ﻿ ͡°) Ƹ̵̡Ӝ̵̨̄Ʒ.•❀.•❤•.¸✿¸.•❤•Oº
+                    
+                    `))
+
+
                     managerPrompt();
 
                 }

@@ -17,8 +17,14 @@ const connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     console.log(colors.america(`
-                                WELCOME TO BAMAZON SUPERVISOR!
-                            `));
+                    ºO•❤•.¸✿¸.•❤•.❀•.Ƹ̵̡Ӝ̵̨̄Ʒ ( ͡° ͜ʖ﻿ ͡°)`))
+    console.log(colors.cyan.bold(`
+                    Welcome To Bamazon Supervisor!`))
+                    
+    console.log(colors.america(`
+                    ( ͡° ͜ʖ﻿ ͡°) Ƹ̵̡Ӝ̵̨̄Ʒ.•❀.•❤•.¸✿¸.•❤•Oº
+                    
+                    `))
     supervisorPrompt();
 });
 
