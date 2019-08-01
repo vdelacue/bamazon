@@ -52,30 +52,26 @@ function supervisorPrompt() {
             }
         })
 }
-// SELECT departments.department_name, products.product_sales - departments.over_head_costs AS total_profit
-// FROM products, departments `,
 
 function viewSales() {
     connection.query(`
-    SELECT 
-        departments.department_id, 
-        departments.department_name, 
-        products.product_sales, 
-        departments.over_head_costs, 
-        SUM(products.product_sales - departments.over_head_costs) AS total_profit
-    FROM 
-        products
-    RIGHT JOIN 
-        departments 
-    ON 
-        products.department_name = departments.department_name
-    GROUP BY 
-        departments.department_id, 
-        departments.department_name, 
-        departments.over_head_costs, 
-        products.product_sales
-    ORDER BY
-        total_profit desc;`,
+SELECT 
+    departments.department_id, 
+    departments.department_name, 
+    departments.over_head_costs, 
+    SUM(IFNULL(products.product_sales, 0)) AS product_sales,
+    SUM(IFNULL(products.product_sales, 0)) - departments.over_head_costs AS total_profit
+FROM 
+    products
+RIGHT JOIN 
+    departments 
+ON 
+    products.department_name = departments.department_name
+GROUP BY 
+    departments.department_id, 
+    departments.department_name, 
+    departments.over_head_costs`,
+
         function (err, results) {
             if (err) throw err;
             console.log(colors.rainbow(`
@@ -114,11 +110,29 @@ function addDept() {
                 },
                 function (err) {
                     if (err) throw err;
-                    console.log(colors.cyan.bold(`
-                                You successfully added ${answer.department} to your departments!`));
+                    console.log(colors.rainbow(`
+                
+                    ──────▄▄▄▄▄███████████████████▄▄▄▄▄──────
+                    ────▄██████████▀▀▀▀▀▀▀▀▀▀██████▀████▄────
+                    ──▄██▀████████▄─────────────▀▀████─▀██▄──
+                    ─▀██▄▄██████████████████▄▄▄─────────▄██▀─
+                    ───▀█████████████████████████▄────▄██▀───
+                    ─────▀████▀▀▀▀▀▀▀▀▀▀▀▀█████████▄▄██▀─────
+                    ───────▀███▄──────────────▀██████▀───────
+                    ─────────▀██████▄─────────▄████▀─────────
+                    ────────────▀█████▄▄▄▄▄▄▄███▀────────────
+                    ──────────────▀████▀▀▀████▀──────────────
+                    ────────────────▀███▄███▀────────────────
+                    ───────────────────▀█▀───────────────────
+
+        You successfully added ${answer.department} to your departments!
+                    
+                                
+                                `));
                     supervisorPrompt();
 
                 }
             );
         });
 }
+

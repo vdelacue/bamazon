@@ -19,7 +19,7 @@ AUTO_INCREMENT=100;
 CREATE TABLE departments (
   department_id INTEGER(10) NOT NULL AUTO_INCREMENT,
   department_name VARCHAR(100) NOT NULL,
-  over_head_costs INTEGER(10),
+  over_head_costs INTEGER(10) NOT NULL,
   PRIMARY KEY (department_id)
 );
 
