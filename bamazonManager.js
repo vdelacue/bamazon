@@ -134,7 +134,7 @@ function addInventory() {
                         Inventory successfully updated! 
                         
                         
-                        You now have ${chosenItem.stock_quantity} in stock
+                        You now have ${chosenItem.stock_quantity + answer.quantity} in stock
                         
                         
                         `));
