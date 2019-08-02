@@ -33,6 +33,7 @@ To run the Customer interface please follow the steps below:
 ```
                   WELCOME TO BAMAZON!
                Checkout available items!
+
 ┌─────────┬─────────┬────────────────────┬─────────┐
 │ (index) │ item_id │    product_name    │  price  │
 ├─────────┼─────────┼────────────────────┼─────────┤
@@ -50,6 +51,7 @@ To run the Customer interface please follow the steps below:
 │   11    │   111   │       'ring'       │   400   │
 │   12    │   112   │     'charger'      │   25    │
 └─────────┴─────────┴────────────────────┴─────────┘
+
 ? Please enter the ID of the item you would like to purchase 
 ```
 ---
