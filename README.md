@@ -1,5 +1,5 @@
 # **Bamazon** 
-Bamazon is a CLI App that is an Amazon-like storefront. This command line based app will take in orders from customers and deplete stock from the store's inventory. Additional functionality was added depending on the user there are different command line prompts based on who is using the App, Customer, Manager, or Supervisor. To watch demos scroll to bottom of readme for GIFs.
+Bamazon is a CLI App that is an Amazon-like storefront. This command line based app will take in orders from customers and deplete stock from the store's inventory. Additional functionality was added depending on the user there are different command line prompts based on who is using the App: Customer, Manager, or Supervisor. Each interface provides different functionality and interactivity with a databes based on command line inputs and outputs. To watch demos scroll to bottom of this readme for GIFs.
 
 ---
 
